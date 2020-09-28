@@ -1,0 +1,14 @@
+.main {
+    display: inline-block;
+    width: 75%;
+    height: auto;
+     /*border:1px solid blue;*/
+    margin: 50px;
+}
+
+.heading {
+    text-align: center;
+    color: #234465;
+    text-decoration: underline;
+    margin-bottom: 2%;
+}
