@@ -4,6 +4,7 @@ import PublicationsPage from "./pages/publications";
 import ShareThoughtsPage from "./pages/share-thoughts";
 import RegisterPage from "./pages/register";
 import LoginPage from "./pages/login";
+import ErrorPage from "./pages/error";
 
 const Navigation = () =>{
 
@@ -15,6 +16,7 @@ const Navigation = () =>{
                     <Route path="/share-thoughts" component={ShareThoughtsPage}/>
                     <Route path="/register" component={RegisterPage}/>
                     <Route path="/login" component={LoginPage}/>
+                    <Route component={ErrorPage}/>
                 </Switch>
             </BrowserRouter>
         </>
