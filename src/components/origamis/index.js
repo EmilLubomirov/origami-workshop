@@ -20,7 +20,7 @@ class Origamis extends React.Component {
                                             result.length;
 
         const postsLength = result.length;
-        
+
         const posts = result.slice(postsLength - length)
                             .map((post, index) => {
             return <Post key={post._id}
