@@ -2,7 +2,7 @@ import React from "react";
 import Post from "../post";
 import styles from "./index.module.css";
 
-class Main extends React.Component {
+class Origamis extends React.Component {
 
     constructor(props) {
         super(props);
@@ -43,4 +43,4 @@ class Main extends React.Component {
     }
 }
 
-export default Main;
+export default Origamis;

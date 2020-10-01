@@ -1,19 +1,19 @@
 import React from "react";
-import Link from "../link";
+import LinkComponent from "../link";
 import styles from "./index.module.css";
+import getNavigation from "../../utils/navigation";
 
 const Aside = () => {
 
+    const navigation = getNavigation();
+
     return (
         <aside className={styles.aside}>
-            <Link href="#" value="Going to 1" location="aside"/>
-            <Link href="#" value="Going to 2" location="aside"/>
-            <Link href="#" value="Going to 3" location="aside"/>
-            <Link href="#" value="Going to 4" location="aside"/>
-            <Link href="#" value="Going to 5" location="aside"/>
-            <Link href="#" value="Going to 6" location="aside"/>
-            <Link href="#" value="Going to 7" location="aside"/>
-            <Link href="#" value="Going to 8" location="aside"/>
+            {
+                navigation.map((navItem, index) => {
+                    return <LinkComponent key={index} path={navItem.path} title={navItem.title} location="aside"/>
+                })
+            }
         </aside>
     )
 };

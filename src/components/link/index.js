@@ -1,13 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./index.module.css";
 
-const Link = ({location, href, value}) =>{
+const LinkComponent = ({location, path, title}) =>{
 
     return (
         <div className={styles[`${location}-link`]}>
-            <a href={href} className={styles[`${location}-list-item`]}>{value}</a>
+            {/*<Link to={path} className={styles[`${location}-list-item`]}>{title}</Link>*/}
+            <a href={path} className={styles[`${location}-list-item`]}>{title}</a>
         </div>
     )
 };
 
-export default Link;
+export default LinkComponent;
