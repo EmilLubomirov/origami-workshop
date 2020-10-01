@@ -6,6 +6,10 @@ const getNavigation = () =>{
             path: "/"
         },
         {
+            title: "Share Thoughts",
+            path: "/share-thoughts"
+        },
+        {
             title: "Register",
             path: "/register"
         },

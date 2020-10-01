@@ -1,0 +1,7 @@
+.main {
+    display: inline-block;
+    width: 75%;
+    height: auto;
+    /*border:1px solid blue;*/
+    margin: 50px;
+}

@@ -6,8 +6,7 @@ const LinkComponent = ({location, path, title}) =>{
 
     return (
         <div className={styles[`${location}-link`]}>
-            {/*<Link to={path} className={styles[`${location}-list-item`]}>{title}</Link>*/}
-            <a href={path} className={styles[`${location}-list-item`]}>{title}</a>
+            <Link to={path} className={styles[`${location}-list-item`]}>{title}</Link>
         </div>
     )
 };
