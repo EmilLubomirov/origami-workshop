@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../header";
 import Aside from "../aside";
 import Footer from "../footer";
+import styles from "./index.module.css";
 
 const PageLayout = (props) =>{
 
@@ -9,7 +10,9 @@ const PageLayout = (props) =>{
         <>
             <Header/>
             <Aside/>
-            {props.children}
+            <main className={styles.main}>
+                {props.children}
+            </main>
             <Footer/>
         </>
     )
