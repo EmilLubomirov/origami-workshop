@@ -1,7 +1,6 @@
 import React from "react";
 import Post from "../post";
 import styles from "./index.module.css";
-import Heading from "../heading";
 
 class Origamis extends React.Component {
 
@@ -14,11 +13,20 @@ class Origamis extends React.Component {
 
    async getAllPosts() {
 
-        const promise = await fetch(`http://localhost:9999/api/origami`);
+        const promise = await fetch(`http://localhost:9999/api/origami?length=${this.props.length}`);
         const result = await promise.json();
 
-        const posts = result.map((post, index) => {
-            return <Post key={post._id} index={index} description={post.description} author={post.author.username}/>
+        const length = this.props.length ? parseInt(this.props.length) :
+                                            result.length;
+
+        const postsLength = result.length;
+        
+        const posts = result.slice(postsLength - length)
+                            .map((post, index) => {
+            return <Post key={post._id}
+                         index={postsLength - length + index }
+                         description={post.description}
+                         author={post.author.username}/>
         });
 
        this.setState({
