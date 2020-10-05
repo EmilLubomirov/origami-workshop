@@ -9,48 +9,82 @@ class RegisterPage extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
+            username: "",
             password: "",
-            rePassword: ""
+            rePassword: "",
         }
     }
 
-    handleEmailChange = (e) =>{
+    handleUsernameChange = (e) =>{
+
+        const username = e.target.value;
 
         this.setState({
-            email: e.target.value
+            username,
         })
     };
 
     handlePasswordChange = (e) =>{
 
+        const password = e.target.value;
+
         this.setState({
-            password: e.target.value
+            password,
         })
     };
 
     handleRePasswordChange = (e) =>{
 
+        const rePassword = e.target.value;
+
         this.setState({
-            rePassword: e.target.value
+            rePassword,
+        })
+    };
+
+    handleSubmit = (e) =>{
+
+        e.preventDefault();
+
+        const {
+            username,
+            password,
+        } = this.state;
+
+        fetch("http://localhost:9999/api/user/register", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then(response => {
+
+            if (response.status === 200){
+                this.props.history.push('/login');
+            }
         })
     };
 
     render() {
 
         const {
-            email,
+            username,
             password,
-            rePassword
+            rePassword,
         } = this.state;
 
         return (
             <PageLayout>
                 <Heading value="Register"/>
-                <Input label="Email" type="text" id="email" value={email} onChange={this.handleEmailChange}/>
-                <Input label="Password" type="password" id="password" value={password} onChange={this.handlePasswordChange}/>
-                <Input label="RePassword" type="password" id="rePassword" value={rePassword} onChange={this.handleRePasswordChange}/>
-                <Button value="Register"/>
+                <form>
+                    <Input label="Username" type="text" id="username" value={username} name="username" onChange={this.handleUsernameChange}/>
+                    <Input label="Password" type="password" id="password" value={password} name="password" onChange={this.handlePasswordChange}/>
+                    <Input label="RePassword" type="password" id="rePassword" value={rePassword} name="rePassword" onChange={this.handleRePasswordChange}/>
+                    <Button type="submit" value="Register" onClick={this.handleSubmit}/>
+                </form>
             </PageLayout>
         )
     }

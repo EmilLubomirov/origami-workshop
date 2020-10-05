@@ -1,13 +1,22 @@
-const getNavigation = () =>{
+const getNavigation = (isAuthenticated) =>{
 
-    return [
-        {
-            title: "Publications",
-            path: "/"
-        },
+
+    const authNav = [
         {
             title: "Share Thoughts",
             path: "/share-thoughts"
+        },
+
+        {
+            title: "Profile",
+            path: "/profile"
+        }
+    ];
+
+    const guestNav = [
+        {
+            title: "Publications",
+            path: "/"
         },
         {
             title: "Register",
@@ -16,12 +25,10 @@ const getNavigation = () =>{
         {
             title: "Login",
             path: "/login"
-        },
-        {
-            title: "Profile",
-            path: "/profile"
         }
-    ]
+    ];
+
+    return isAuthenticated ? authNav : guestNav;
 };
 
 export default getNavigation;
