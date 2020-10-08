@@ -20,7 +20,7 @@ class Origamis extends React.Component {
         const promise = await fetch(url);
         const result = await promise.json();
 
-        const length = this.props.length ? parseInt(this.props.length) :
+       const length = this.props.length ? parseInt(this.props.length) :
                                             result.length;
 
         const postsLength = result.length;
@@ -34,7 +34,7 @@ class Origamis extends React.Component {
         });
 
        this.setState({
-            posts
+            posts,
         })
     }
 

@@ -63,7 +63,7 @@ class Navigation extends React.Component {
                         <Route path="/share-thoughts" component={ShareThoughtsPage}/>
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/login" component={LoginPage}/>
-                        <Route path="/profile" component={ProfilePage}/>
+                        <Route path="/profile/:id" component={ProfilePage}/>
                         <Route component={ErrorPage}/>
                     </Switch>
                 </BrowserRouter>
