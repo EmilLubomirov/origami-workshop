@@ -16,11 +16,16 @@ class ProfilePage extends React.Component{
 
     render() {
 
+        const userId = this.props.match.params.id;
+        console.log(this.context);
+        const username = this.context.user ? this.context.user.username : "";
+
        return (
            <PageLayout>
                <Button onClick={this.handleLogout} value="Logout"/>
+               <span>Username: {username}</span>
                <Heading value="Your 3 recent posts"/>
-               <Origamis length={3}/>
+               <Origamis userId={userId} length={3}/>
            </PageLayout>
        )
     }

@@ -1,8 +1,15 @@
 const models = require('../models');
+const mongoose = require('mongoose');
 
 module.exports = {
     get: (req, res, next) => {
-        models.Origami.find().populate('author')
+        const { userId } = req.query;
+
+        const criteria = userId ? {
+            author: mongoose.mongo.ObjectID(userId)
+        } : {};
+
+        models.Origami.find(criteria).populate('author')
             .then((origamies) => res.send(origamies))
             .catch(next);
     },

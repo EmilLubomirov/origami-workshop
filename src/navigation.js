@@ -53,6 +53,8 @@ class Navigation extends React.Component {
 
     render() {
 
+        const isLoggedIn = this.state.isLoggedIn;
+
         return (
             <AuthContext.Provider value={this.state}>
                 <BrowserRouter>
@@ -61,7 +63,7 @@ class Navigation extends React.Component {
                         <Route path="/share-thoughts" component={ShareThoughtsPage}/>
                         <Route path="/register" component={RegisterPage}/>
                         <Route path="/login" component={LoginPage}/>
-                        <Route path="/profile/:id" component={ProfilePage}/>
+                        <Route path="/profile" component={ProfilePage}/>
                         <Route component={ErrorPage}/>
                     </Switch>
                 </BrowserRouter>
