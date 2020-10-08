@@ -13,7 +13,7 @@ class Origamis extends React.Component {
 
    async getAllPosts() {
 
-        const promise = await fetch(`http://localhost:9999/api/origami?length=${this.props.length}`);
+        const promise = await fetch(`http://localhost:9999/api/origami`);
         const result = await promise.json();
 
         const length = this.props.length ? parseInt(this.props.length) :

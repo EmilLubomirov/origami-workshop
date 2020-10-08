@@ -8,7 +8,13 @@ class Footer extends React.Component{
 
    render() {
 
-       const navigation = getNavigation(this.context.isLoggedIn);
+       const {
+           user,
+           isLoggedIn
+       } = this.context;
+
+       const userId = user ? user.id : null;
+       const navigation = getNavigation(isLoggedIn, userId);
 
        return (
            <footer className={styles.footer}>

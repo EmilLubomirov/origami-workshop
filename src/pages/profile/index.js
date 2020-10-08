@@ -19,7 +19,7 @@ class ProfilePage extends React.Component{
        return (
            <PageLayout>
                <Button onClick={this.handleLogout} value="Logout"/>
-               <Heading value="You 3 recent posts"/>
+               <Heading value="Your 3 recent posts"/>
                <Origamis length={3}/>
            </PageLayout>
        )

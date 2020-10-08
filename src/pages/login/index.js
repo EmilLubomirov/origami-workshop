@@ -48,8 +48,15 @@ class LoginPage extends React.Component {
             password
         });
 
-        authenticate(url, headers, body, () =>{
-            this.context.login();
+        authenticate(url, headers, body, async (response) =>{
+
+            const {_id, username } = await response.json();
+
+            this.context.login({
+                id: _id,
+                username
+            });
+
             this.props.history.push('/');
         }, (e) => console.error(e))
     };

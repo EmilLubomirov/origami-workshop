@@ -3,6 +3,24 @@ const config = require('../config/config');
 const utils = require('../utils');
 
 module.exports = {
+
+    verifyLogin: async (req, res, next) =>{
+
+        const authToken = req.body.authToken;
+
+        if (!authToken){
+            return false;
+        }
+
+        try {
+            const decodedToken = await utils.jwt.verifyToken(authToken);
+            return res.send(decodedToken);
+        }
+        catch (e) {
+            next(e);
+        }
+    },
+
     get: (req, res, next) => {
         models.User.find()
             .then((users) => res.send(users))

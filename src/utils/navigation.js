@@ -1,5 +1,4 @@
-const getNavigation = (isAuthenticated) =>{
-
+const getNavigation = (isAuthenticated, userId) =>{
 
     const authNav = [
         {
@@ -9,7 +8,7 @@ const getNavigation = (isAuthenticated) =>{
 
         {
             title: "Profile",
-            path: "/profile"
+            path: `/profile/${userId}`
         }
     ];
 
