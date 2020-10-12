@@ -1,58 +1,45 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Post from "../post";
 import styles from "./index.module.css";
 
-class Origamis extends React.Component {
+const Origamis = ({length, userId}) =>{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: []
-        }
-    }
+    const [posts, setPosts] = useState([]);
 
-   async getAllPosts() {
+    const getAllPosts =  useCallback(async () => {
 
-        const userId = this.props.userId;
         const url = userId ? `http://localhost:9999/api/origami?userId=${userId}` :
-                            `http://localhost:9999/api/origami`;
+                             `http://localhost:9999/api/origami`;
 
-        const promise = await fetch(url);
-        const result = await promise.json();
-
-       const length = this.props.length ? parseInt(this.props.length) :
-                                            result.length;
-
-        const postsLength = result.length;
-
-        const posts = result.slice(postsLength - length)
-                            .map((post, index) => {
-            return <Post key={post._id}
-                         index={postsLength - length + index }
-                         description={post.description}
-                         author={post.author.username}/>
+        const promise = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                length
+            }
         });
 
-       this.setState({
-            posts,
-        })
-    }
+        const result = await promise.json();
 
-    componentDidMount() {
-        this.getAllPosts();
-    }
+        const posts = result.map(post => {
+                return <Post key={post._id}
+                             description={post.description}
+                             author={post.author.username}/>
+            });
 
-    render() {
+        setPosts(posts);
+    },[length, userId]);
 
-        return (
-            <main className={styles.main}>
-                <div className={styles.posts}>
-                    {this.state.posts}
-                </div>
-            </main>
-        )
+    useEffect(() =>{
+        getAllPosts();
+    }, [getAllPosts]);
 
-    }
-}
+    return (
+        <main className={styles.main}>
+            <div className={styles.posts}>
+                {posts}
+            </div>
+        </main>
+    )
+};
 
 export default Origamis;

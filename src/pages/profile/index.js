@@ -1,59 +1,53 @@
-import React from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
+import {useHistory, useParams} from "react-router-dom";
 import Button from "../../components/button";
-import AuthContext from "../../AuthContext";
 import Origamis from "../../components/origamis";
 import Heading from "../../components/heading";
 import PageLayout from "../../components/page-layout";
+import AuthContext from "../../AuthContext";
 
-class ProfilePage extends React.Component{
+const ProfilePage = () =>{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            origamiesCount: 0
-        }
-    }
+    const [origamisCount, setOrigamisCount] = useState(0);
 
-    handleLogout = () =>{
-        this.context.logout();
+    const context = useContext(AuthContext);
+    const history = useHistory();
+    const params = useParams();
+
+    const handleLogout = () =>{
+        context.logout();
         document.cookie = "x-auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        this.props.history.push('/login');
+        history.push('/login');
     };
 
-    getOrigamiesCount = async () =>{
+    const getOrigamisCount = useCallback(async () =>{
 
-        const userId = this.props.match.params.id;
+        const userId = params.id;
         const url = `http://localhost:9999/api/origami?userId=${userId}`;
 
         const promise = await fetch(url);
         const result = await promise.json();
 
-        this.setState({
-            origamiesCount: result.length
-        });
-    };
+        setOrigamisCount(result.length);
+    }, [params.id]);
 
-    componentDidMount() {
-       this.getOrigamiesCount();
-    }
+    useEffect(() =>{
+       getOrigamisCount();
+    },[getOrigamisCount]);
 
-    render() {
+    const userId = params.id;
+    const username = context.user ? context.user.username : "";
 
-        const userId = this.props.match.params.id;
-        const username = this.context.user ? this.context.user.username : "";
+    return (
+        <PageLayout>
+            <Button onClick={handleLogout} value="Logout"/>
+            <div>Username: {username}</div>
+            <div>Posts: {origamisCount}</div>
+            <Heading value="Your 3 recent posts"/>
+            <Origamis userId={userId} length={3}/>
+        </PageLayout>
+    )
+};
 
-        return (
-           <PageLayout>
-               <Button onClick={this.handleLogout} value="Logout"/>
-               <div>Username: {username}</div>
-               <div>Posts: {this.state.origamiesCount}</div>
-               <Heading value="Your 3 recent posts"/>
-               <Origamis userId={userId} length={3}/>
-           </PageLayout>
-       )
-    }
-}
-
-ProfilePage.contextType = AuthContext;
 export default ProfilePage;

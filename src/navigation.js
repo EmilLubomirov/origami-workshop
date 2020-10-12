@@ -53,8 +53,6 @@ class Navigation extends React.Component {
 
     render() {
 
-        const isLoggedIn = this.state.isLoggedIn;
-
         return (
             <AuthContext.Provider value={this.state}>
                 <BrowserRouter>

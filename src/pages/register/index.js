@@ -1,55 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import Input from "../../components/input";
 import Button from "../../components/button";
 
-class RegisterPage extends React.Component{
+const RegisterPage = () =>{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: "",
-            password: "",
-            rePassword: "",
-        }
-    }
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
 
-    handleUsernameChange = (e) =>{
+    const history = useHistory();
 
-        const username = e.target.value;
-
-        this.setState({
-            username,
-        })
+    const handleUsernameChange = (e) =>{
+       setUsername(e.target.value);
     };
 
-    handlePasswordChange = (e) =>{
+    const handlePasswordChange = (e) =>{
+        setPassword(e.target.value);
+     };
 
-        const password = e.target.value;
-
-        this.setState({
-            password,
-        })
+     const handleRePasswordChange = (e) =>{
+         setRePassword(e.target.value);
     };
 
-    handleRePasswordChange = (e) =>{
-
-        const rePassword = e.target.value;
-
-        this.setState({
-            rePassword,
-        })
-    };
-
-    handleSubmit = (e) =>{
+    const handleSubmit = (e) =>{
 
         e.preventDefault();
-
-        const {
-            username,
-            password,
-        } = this.state;
 
         fetch("http://localhost:9999/api/user/register", {
             method: "POST",
@@ -63,31 +41,26 @@ class RegisterPage extends React.Component{
         }).then(response => {
 
             if (response.status === 200){
-                this.props.history.push('/login');
+                history.push('/login');
             }
         })
     };
 
-    render() {
-
-        const {
-            username,
-            password,
-            rePassword,
-        } = this.state;
-
-        return (
-            <PageLayout>
-                <Heading value="Register"/>
-                <form>
-                    <Input label="Username" type="text" id="username" value={username} name="username" onChange={this.handleUsernameChange}/>
-                    <Input label="Password" type="password" id="password" value={password} name="password" onChange={this.handlePasswordChange}/>
-                    <Input label="RePassword" type="password" id="rePassword" value={rePassword} name="rePassword" onChange={this.handleRePasswordChange}/>
-                    <Button type="submit" value="Register" onClick={this.handleSubmit}/>
-                </form>
-            </PageLayout>
-        )
-    }
-}
+    return (
+        <PageLayout>
+            <Heading value="Register"/>
+            <form>
+                <Input label="Username" type="text" id="username" value={username} name="username"
+                       onChange={handleUsernameChange}/>
+                <Input label="Password" type="password" id="password" value={password} name="password"
+                       onChange={handlePasswordChange}/>
+                <Input label="RePassword" type="password" id="rePassword" value={rePassword} name="rePassword"
+                       onChange={handleRePasswordChange}/>
+                <Button type="submit" value="Register"
+                        onClick={handleSubmit}/>
+            </form>
+        </PageLayout>
+    )
+};
 
 export default RegisterPage;

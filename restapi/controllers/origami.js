@@ -3,22 +3,30 @@ const mongoose = require('mongoose');
 
 module.exports = {
     get: (req, res, next) => {
-        const { userId } = req.query;
+
+        const { length } = req.headers;
+        const userId = req.query.userId;
 
         const criteria = userId ? {
             author: mongoose.mongo.ObjectID(userId)
         } : {};
 
-        models.Origami.find(criteria).populate('author')
-            .then((origamies) => res.send(origamies))
+        models.Origami.find(criteria)
+            .sort({date: -1})
+            .populate({path: "author"})
+            .limit(parseInt(length))
+            .then((origamies) => {
+                res.send(origamies)
+            })
             .catch(next);
     },
 
     post: (req, res, next) => {
-        const { description } = req.body;
-        const { _id } = req.user;
 
-        models.Origami.create({ description, author: _id })
+        const { description } = req.body;
+        const _id = req.user.id;
+
+        models.Origami.create({ description, author: _id, date: new Date() })
             .then((createdOrigami) => {
                 return Promise.all([
                     models.User.updateOne({ _id }, { $push: { posts: createdOrigami } }),

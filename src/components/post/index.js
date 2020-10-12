@@ -2,13 +2,12 @@ import React from "react";
 import styles from  "./index.module.css";
 import Origami from "../../images/blue-origami-bird.png";
 
-const Post = ({description, author, index}) =>{
+const Post = ({description, author}) =>{
 
     return (
         <div className={styles.post}>
             <img src={Origami} className={styles.origami} alt="Origami"/>
             <p className={styles.description}>
-                <span>{index} - </span>
                 {description}
             </p>
             <div className={styles["author-wrapper"]}>
