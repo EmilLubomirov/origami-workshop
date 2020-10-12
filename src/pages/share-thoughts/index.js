@@ -32,7 +32,7 @@ const ShareThoughtsPage = () =>{
                 description,
                 user: context.user
             })
-        }).then((response) => history.push(`/profile/${context.user.id}`));
+        }).then(() => history.push("/"));
     };
 
     return (

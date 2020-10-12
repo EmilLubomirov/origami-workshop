@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {BrowserRouter, Route, Switch } from "react-router-dom";
 import PublicationsPage from "./pages/publications";
 import ShareThoughtsPage from "./pages/share-thoughts";
@@ -9,65 +9,57 @@ import AuthContext from "./AuthContext";
 import ProfilePage from "./pages/profile";
 import { getLoggedInUser } from "./utils/auth";
 
-class Navigation extends React.Component {
+const Navigation = () =>{
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            user: undefined,
-            isLoggedIn: undefined,
-            login: this.login,
-            logout: this.logout
+    const [state, setState] = useState({
+        user: undefined,
+        isLoggedIn: undefined,
+        login: (user) =>{
+            setState({
+                ...state,
+                user: user,
+                isLoggedIn: true
+            });
+        },
+        logout: () =>{
+            setState({
+                ...state,
+                user: null,
+                isLoggedIn: false
+            });
         }
-    }
+    });
 
-    login = (user) =>{
+    const checkUserStatus = useCallback(async () =>{
+        const currentUser = await getLoggedInUser();
+        const isUserLoggedIn = !!currentUser;
 
-        this.setState({
-            user,
-            isLoggedIn: true
-        })
-    };
+        setState({
+            ...state,
+            user: currentUser,
+            isLoggedIn: isUserLoggedIn
+        });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    logout = () =>{
-      this.setState({
-          user: null,
-          isLoggedIn: false
-      })
-    };
+    useEffect(() =>{
+        checkUserStatus();
+    }, [checkUserStatus]);
 
-    checkUserStatus = async () =>{
-        const user = await getLoggedInUser();
-        const isLoggedIn = !!user;
+    return (
+        <AuthContext.Provider value={state}>
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/" exact component={PublicationsPage}/>
+                    <Route path="/share-thoughts" component={ShareThoughtsPage}/>
+                    <Route path="/register" component={RegisterPage}/>
+                    <Route path="/login" component={LoginPage}/>
+                    <Route path="/profile/:id" component={ProfilePage}/>
+                    <Route component={ErrorPage}/>
+                </Switch>
+            </BrowserRouter>
+        </AuthContext.Provider>
+    )
+};
 
-        this.setState({
-            user,
-            isLoggedIn
-        })
-    };
-
-    componentDidMount() {
-        this.checkUserStatus();
-    }
-
-    render() {
-
-        return (
-            <AuthContext.Provider value={this.state}>
-                <BrowserRouter>
-                    <Switch>
-                        <Route path="/" exact component={PublicationsPage}/>
-                        <Route path="/share-thoughts" component={ShareThoughtsPage}/>
-                        <Route path="/register" component={RegisterPage}/>
-                        <Route path="/login" component={LoginPage}/>
-                        <Route path="/profile/:id" component={ProfilePage}/>
-                        <Route component={ErrorPage}/>
-                    </Switch>
-                </BrowserRouter>
-            </AuthContext.Provider>
-        )
-    }
-}
 
 export default Navigation;
