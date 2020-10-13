@@ -1,26 +1,17 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Post from "../post";
 import styles from "./index.module.css";
+import getOrigamis from "../../utils/origami";
 
-const Origamis = ({length, userId}) =>{
+const Origamis = ({length, userId, updatedOrigami}) =>{
 
     const [posts, setPosts] = useState([]);
 
     const getAllPosts =  useCallback(async () => {
 
-        const url = userId ? `http://localhost:9999/api/origami?userId=${userId}` :
-                             `http://localhost:9999/api/origami`;
+        const origamis = await getOrigamis(userId, length);
 
-        const promise = await fetch(url, {
-            headers: {
-                "Content-Type": "application/json",
-                length
-            }
-        });
-
-        const result = await promise.json();
-
-        const posts = result.map(post => {
+        const posts = origamis.map(post => {
                 return <Post key={post._id}
                              description={post.description}
                              author={post.author.username}/>
@@ -31,7 +22,7 @@ const Origamis = ({length, userId}) =>{
 
     useEffect(() =>{
         getAllPosts();
-    }, [getAllPosts]);
+    }, [getAllPosts, updatedOrigami]);
 
     return (
         <main className={styles.main}>

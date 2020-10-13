@@ -1,5 +1,4 @@
 import React, {useState, useContext} from "react";
-import {useHistory} from "react-router-dom";
 import PageLayout from "../../components/page-layout";
 import Heading from "../../components/heading";
 import Button from "../../components/button";
@@ -12,9 +11,9 @@ import {getCookie} from "../../utils/cookie";
 const ShareThoughtsPage = () =>{
 
     const [description, setDescription] = useState("");
+    const [updatedOrigami, setUpdatedOrigami] = useState([]);
 
     const context = useContext(AuthContext);
-    const history = useHistory();
 
     const handleChange = (e) =>{
         setDescription(e.target.value);
@@ -32,17 +31,19 @@ const ShareThoughtsPage = () =>{
                 description,
                 user: context.user
             })
-        }).then(() => history.push("/"));
+        }).then(() => {
+            setUpdatedOrigami([...updatedOrigami, 1]);
+            setDescription("");
+        });
     };
 
     return (
-
         <PageLayout>
             <Heading value="Share your thoughts..."/>
-            <TextArea placeholder="Type something..." onChange={handleChange} defaultValue=""/>
+            <TextArea placeholder="Type something..." onChange={handleChange} value={description}/>
             <Button value="Post" onClick={handleClick}/>
             <h2 className={styles.h2}>Last 3 posts on your wall</h2>
-            <Origamis length={3}/>
+            <Origamis updatedOrigami={updatedOrigami} length={3}/>
         </PageLayout>
     )
 };

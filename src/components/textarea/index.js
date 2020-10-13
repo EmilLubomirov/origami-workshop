@@ -5,7 +5,7 @@ const TextArea = ({ value, placeholder, onChange }) =>{
 
     return (
         <div>
-            <textarea className={styles.textarea} placeholder={placeholder} onChange={onChange}>{value}</textarea>
+            <textarea className={styles.textarea} placeholder={placeholder} value={value} onChange={onChange}/>
         </div>
     )
 
