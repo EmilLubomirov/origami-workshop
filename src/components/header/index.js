@@ -22,7 +22,11 @@ const Header = () =>{
             <img src={Logo} className={styles.logo} alt="bird-logo"/>
             {
                 navigation.map((navItem, index) => {
-                    return <LinkComponent key={index} path={navItem.path} title={navItem.title} location="header"/>
+                    return <LinkComponent key={index}
+
+                                          path={navItem.path}
+                                          title={navItem.title}
+                                          location="header"/>
                 })
             }
         </header>

@@ -5,7 +5,7 @@ import styles from "./index.module.css";
 const LinkComponent = ({location, path, title}) =>{
 
     return (
-        <div className={styles[`${location}-link`]}>
+        <div data-test-id={`link-${title}`} className={styles[`${location}-link`]}>
             <Link to={path} className={styles[`${location}-list-item`]}>{title}</Link>
         </div>
     )

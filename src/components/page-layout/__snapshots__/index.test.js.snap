@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page Layout Component should render page layout component 1`] = `
+Array [
+  <Header />,
+  <Aside />,
+  <main
+    className="main"
+  />,
+  <Footer />,
+]
+`;

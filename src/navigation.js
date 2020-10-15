@@ -8,6 +8,7 @@ import ErrorPage from "./pages/error";
 import AuthContext from "./AuthContext";
 import ProfilePage from "./pages/profile";
 import { getLoggedInUser } from "./utils/auth";
+import ErrorBoundary from "./ErrorBoundary";
 
 const Navigation = () =>{
 
@@ -46,18 +47,20 @@ const Navigation = () =>{
     }, [checkUserStatus]);
 
     return (
-        <AuthContext.Provider value={state}>
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/" exact component={PublicationsPage}/>
-                    <Route path="/share-thoughts" component={ShareThoughtsPage}/>
-                    <Route path="/register" component={RegisterPage}/>
-                    <Route path="/login" component={LoginPage}/>
-                    <Route path="/profile/:id" component={ProfilePage}/>
-                    <Route component={ErrorPage}/>
-                </Switch>
-            </BrowserRouter>
-        </AuthContext.Provider>
+        <ErrorBoundary>
+            <AuthContext.Provider value={state}>
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/" exact component={PublicationsPage}/>
+                        <Route path="/share-thoughts" component={ShareThoughtsPage}/>
+                        <Route path="/register" component={RegisterPage}/>
+                        <Route path="/login" component={LoginPage}/>
+                        <Route path="/profile/:id" component={ProfilePage}/>
+                        <Route component={ErrorPage}/>
+                    </Switch>
+                </BrowserRouter>
+            </AuthContext.Provider>
+        </ErrorBoundary>
     )
 };
 

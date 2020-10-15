@@ -1,4 +1,4 @@
-import {getCookie} from "./cookie";
+import { getCookie } from "./cookie";
 
 const authCookieName = "x-auth-token";
 
@@ -25,15 +25,12 @@ export const authenticate = (url, headers, body, onSuccess, onFailure) =>{
 
 export const getLoggedInUser = async () =>{
 
-    const authToken = getCookie(authCookieName);
-
-    const headers =  { 'Content-Type': 'application/json' };
-    const body = JSON.stringify({ "authToken": authToken });
+    const authToken = getCookie(authCookieName) || "";
+    const headers =  { 'Content-Type': 'application/json', "authorization": authToken};
 
     const promise = await  fetch("http://localhost:9999/api/user/verifyLogin", {
         method: "POST",
         headers,
-        body
     });
 
     return await promise.json();

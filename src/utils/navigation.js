@@ -2,6 +2,10 @@ const getNavigation = (isAuthenticated, userId) =>{
 
     const authNav = [
         {
+            title: "Publications",
+            path: "/"
+        },
+        {
             title: "Share Thoughts",
             path: "/share-thoughts"
         },
